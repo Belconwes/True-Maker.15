@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<head>
+  <meta http-equiv="Expires" content="0">
+
+  <meta http-equiv="Last-Modified" content="0">
+
+  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+
+  <meta http-equiv="Pragma" content="no-cache">
+    
+    <title> main </title>
+    <Link rel="stylesheet"  href= "{% static 'css/navbar.css' %}">
+    <link  rel="stylesheet"  href="{% static 'css/register.css' %}" >
+    <Link rel="stylesheet"  href= "{% static 'css/estilo_p.css' %}">
+      <Link rel="stylesheet"  href= "{% static 'css/estilos-signup-log.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carrito/carrito_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_m.css' %}">
+    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+    <script src="https://kit.fontawesome.com/deecb3ce02.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      var user = '{{request.user}}'
+
+      function getToken(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      const csrftoken = getToken('csrftoken');
+  </script>
+  <style>
+    .cuerpo{
+      font-family: Arial, sans-serif;
+      position: relative;
+      
+     
+      min-height: 100vh;
+    }
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .button-container a {
+        width: 45%; /* Ajusta el ancho de los botones según tus preferencias */
+        word-wrap: break-word;
+    }
+
+    .button-container a:first-child {
+        margin-right: 4%; /* Ajusta el espacio entre los botones */
+       
+    }
+    @media (max-width: 768px) {
+        .button-container {
+            flex-direction: column; /* Cambia a una disposición vertical en pantallas más pequeñas */
+        }
+
+        .button-container a {
+            width: 100%; /* Ocupa todo el ancho en pantallas más pequeñas */
+            margin-bottom: 10px; /* Espaciado entre botones en pantallas más pequeñas */
+            border-right: none; /* Elimina el borde derecho en pantallas más pequeñas */
+        }
+    }
+  </style>
+</head>
+
+<body class="cuerpo">
+  <header class="header">
+    <nav class="navbar">
+        <div class="logo">
+          <h1>TRUE MAKER</h1>
+        </div>
+        <div class="search">
+            <form class="d-flex" action="{% url 'buscar' %}" method="GET" role="search">
+                <input class="form-control me-2" type="search" name="texto" id="texto" placeholder="BUSCAR PRODUCTOS" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit" >Search</button>
+             </form>
+            
+        </div>
+        <div class="carrito" style="justify-items: auto;">
+          <a role="button" class="btn btn-success mr-3" href="{% url 'cart' %}">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+        </div>
+    </nav>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li class="nav-item">
+             <a class="nav-link active" aria-current="page" href="{% url 'padre' %}">Home</a>
+           </li>
+            <li><a href="#ofertas">Ofertas</a></li>
+            <li><a href="#footer">Contacto</a></li>
+            {% if user.is_authenticated %}
+           <li class="nav-item">
+             <a class="nav-link " href="http://127.0.0.1:8000/logout">Cerrar cession</a>
+           </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/registro">Registrarse/Inicar</a>
+          </li>
+          {% endif %}
+            
+            {% if user.is_admin %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'cargar' %}">Carga de Productos</a>
+            </li>
+            {% endif %}
+            {% if user.is_superuser %}
+
+            <li class="nav-item">
+              <a class="nav-link " href="http://127.0.0.1:8000/admin">Admin</a>
+            </li>
+  
+            {% endif %}
+            
+        </ul>
+    </nav>
+    <section class="departamentos">
+      <h2 style="color: black;" >Categorías</h2>
+      <ul>
+         {% for categoria in cata %}
+
+          <li><a href="{% url 'search' categoria.id %}">{{categoria.nombre}}</a></li>
+
+          {% endfor %}
+          <!-- Agrega más departamentos según lo necesites -->
+      </ul>
+    </section>
+</header>
+   <div>
+    {% block content %}
+
+    {% endblock %}
+   </div>
+    <!-- Titulo -->
+
+    <!-- Productos -->
+    
+      <div class="productos">
+        {% for producto in product %}
+          <div class="cards">
+                      <!-- src="https://picsum.photos/200/200?random={{ forloop.counter }}" -->
+                      <img 
+                      class="card-img-top mx-auto"
+                      src="{{producto.detail_image.url}}"
+                      alt="{{producto.nombre}}"
+                      >
+                      <div class="card-body text-center">
+                          <h4 class="card-title">{{ producto.nombre.title|truncatechars:30 }}</h4>
+                          <p class="card-text ">{{ producto.descripcion.capitalize|truncatechars:50 }}</p>
+                          <p class="card-text ">{{ producto.precio }}$ </p>
+                          <div class="button-container">
+                            <a  class="btn btn-primary"   role="button" href="{% url 'carti' producto.id %}">DETALLES</a>
+                            <a data-product="{{producto.id}}"  data-action="add" class="btn btn-outline-success update-cart">Agregar al carrito</a>
+                          </div>
+                         
+  
+                          {% if user.is_admin %}
+                           <div class="button-container" >
+                            <a href="{% url 'modify' producto.id %}" class="btn btn-outline-secondary btn-block" >Editar</a>
+                            <a href="{% url 'eliminar' producto.id %}" class="btn btn-outline-danger btn-block">Eliminar</a>
+
+                           </div>
+                          {% endif %}
+                          
+                      </div>
+            </div>
+            {% endfor %}
+           
+      </div>
+    
+   
+   
+
+  <footer id="footer" class="footer">
+    <div class="info">
+        <h3>Contacto</h3>
+        <p>Dirección: [Dirección del supermercado]</p>
+        <p>Teléfono: [Número de contacto]</p>
+        <p>Email: [Correo electrónico de contacto]</p>
+    </div>
+    <div class="horario">
+        <h3>Horario de Atención</h3>
+        <p>Lunes a Viernes: 8am - 10pm</p>
+        <p>Sábados y Domingos: 9am - 9pm</p>
+    </div>
+    <div class="redes-sociales">
+        <h3>Síguenos en Redes Sociales</h3>
+        <a href="#">Facebook</a>
+        <a href="https://twitter.com/Pierinicolas_">Twitter</a>
+        <a href="https://www.instagram.com/pierinicolas/">Instagram</a>
+        <div class="container"style="margin: 40px 0 0 40px;">
+          <audio controls >
+            <source src="/media/audios/Lagrimas.mp3" type="audio/mpeg">
+            </audio>
+
+        </div>
+    </div>
+  </footer>
+  <script>
+  document.querySelector('a[href="#footer"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('footer').scrollIntoView({
+          behavior: 'smooth'
+      });
+  });
+ </script>
+  <script rel="stylesheet" src="{% static 'javas/cart.js' %}"></script>
+  <script rel="stylesheet" src="{% static 'javas/pago_m.js' %}"></script>
+  <script rel="stylesheet" src="{% static 'javas/registros/script_log-sig.js' %}"></script>
+  <script nonce="kg1QqdEvYkeQKUsqLYzbxQ=='" src="https://http2.mlstatic.com/analytics/ga/mla-mp-analytics.min.js"></script>
+  <script src="https://sdk.mercadopago.com/js/v2">
+    const mp = new MercadoPago('APP_USR-a4aff583-5735-4121-b959-786138c9e851');
+    const bricksBuilder = mp.bricks();
+    mp.bricks().create("wallet", "wallet_container", {
+   initialization: {
+       preferenceId: "<PREFERENCE_ID>",
+        redirectMode: "modal"
+   },
+  });
+  </script>
+</body>
+
+
+
+</html>

@@ -1,0 +1,56 @@
+{% extends 'Main.html'%}
+
+{% block content %}
+
+<main class="flex-shrink-0">
+    {% for m in productos %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 order-md-1">
+                <!--Carrusel-->
+                <div id="carouselImages" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <!--Imagenes-->
+                        <div class="carousel-item active">
+                            <img src="{{ m.detail_image.url }}" class="d-block w-100">
+                        </div>
+
+                        
+                        
+                    </div>
+
+                   
+                </div>
+            </div>
+            
+            <div class="col-md-7 order-md-2">
+                <h2>{{m.nombre}}</h2>
+                <p><del>$ {{m.precio}}</del></p>
+                <h2 style="color: black;">
+                 ${{m.precio}} 
+                 <small class=" text-success">descuento del 5%</small>
+                </h2>
+
+                
+                
+                <p class="lead">{{m.descripcion}}</p>
+          
+
+                <div class="col-3 my-3">
+                    <input class="form-control update-cart"  data-product="{{m.id}}"  data-action="add" id="cantidad" name="cantidad" type="number" min="1" max="{{m.cantidad}}" value="1">
+                </div>
+
+                <div class="d-grid gap-3 col-7">
+                    <button class="btn btn-primary" type="button">Comprar ahora</button>
+                    <button class="btn btn-outline-primary update-cart" data-product="{{m.id}}"  data-action="add" class="btn btn-primary update-cart" >Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+</main>
+{% endblock %}
+
+
+

@@ -1,0 +1,83 @@
+{% extends 'Main.html' %}
+{% load static %}
+{% block content %}
+
+<main class="container my-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box-element">
+                <a class="btn btn-outline-dark" href="/">&#x2190;Continuar comprando</a>
+    
+                <br>
+                <br>
+                <div class="col-12 p-0 mb-2">
+                    <h3 class="display-4 text-capitalize mt-2" style="font-size: 2em;">{{user.email.capitalize}}</h3>
+                </div>
+    
+                <table class="table">
+                    <tr>
+                        <th><h5>Items: <strong>{{pedido.get_cart_items}}</strong></h5></th>
+                        <th><h5>Total: <strong>${{pedido.get_cart_total}}</strong></h5></th>
+                         
+                        <th>
+                            
+                        </th>
+                        
+                    </tr>
+                </table>
+            </div>
+            
+            <br>
+    
+            <div class="box-element">
+                <div class="cart-row">
+                    <div style="flex:2"></div>
+                    <div style="flex:2"><strong>Item</strong></div>
+                    <div style="flex:1"><strong>Precio</strong></div>
+                    <div style="flex:1"><strong>Cantidad</strong></div>
+                    <div style="flex:1"><strong>Total</strong></div>
+                </div>
+                {% for item in items %}
+                <div class="cart-row">
+                    <div style="flex:2"><img class="row-image" src="{{item.id_producto.detail_image.url}}"></div>
+                    <div style="flex:2"><p>{{item.id_producto.nombre}}</p></div>
+                    <div style="flex:1"><p>${{item.id_producto.precio}}</p></div>
+                    <div style="flex:1">
+                        <p class="quantity">{{item.cantidad}}</p>
+                        <div class="quantity">
+                            <a data-product={{item.id_producto.id}} data-action="add" class="btn btn-sm btn btn-success update-cart">+</a>
+
+                            <a data-product={{item.id_producto.id}} data-action="remove" class="btn btn-sm btn btn-success update-cart">-</a>
+                           
+                            <!-- <img data-product={{item.id_producto.id}} data-action="add" class="chg-quantity update-cart" src="{% static  'img/arriba.png' %}"> -->
+                    
+                           <!--  <img data-product={{item.id_producto.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'img/abajo.png' %}"> -->
+                        </div>
+                    </div>
+                    <div style="flex:1"><p>${{item.get_total}}</p></div>
+                </div>
+                {% empty %}
+                <div class="col-12 p-0 m-0">
+                    <p class="d-flex justify-content-between align-items-center">
+                        No tiene ningun producto en el carrito
+                    </p>
+                </div>
+              {% endfor %}
+              <div class="col-12 p-0 m-0 my-3 row ">
+                <div class="col-md-5 col-lg-3 p-0">
+                    <a href="{% url 'clear' %}" class="btn btn-danger btn-block">Vaciar Carrito</a>
+                </div>
+             </div>
+             <div id="wallet_container">  </div>
+             <a id="boton-pago" class="d-grid gap-2" href=" https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=682974527-e3a9e473-316a-4f46-a0ab-c32cbd055361"> 
+                <button class="btn btn-success">
+                  Paga con MercadoPago
+                </button>
+              </a>
+              
+        </div>
+    </div>
+   
+</main>
+
+{% endblock content %}

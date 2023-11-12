@@ -1,0 +1,62 @@
+{% extends 'Main.html '%}
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G.O.S.F.P.S</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+    <!-- //web font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+   
+   
+
+</head>
+
+
+    <body class="body-lock" >
+        {% block content %}
+
+        <div class="main-w3layouts wrapper">
+            <h1> SignUp </h1>
+            <div class="main-agileinfo">
+                <div class="agileits-top">
+                    <form action="" method="POST">
+                        {{error}}
+                        {% csrf_token %}
+                        
+                        <input class="text email" type="email" name="email" id="email" placeholder="Email" required="">
+                        <input type="text" name="nombre" id="nombre" placeholder="Nombre">
+                        <input type="text" name="apellido" id="apellido" placeholder="Apellido">
+                        <input class="text w3lpass" type="password" name="password1" id="password1" placeholder="Password" required="">
+                        <input class="text w3lpass" type="password" name="password2" id="password2" placeholder="Confirm Password" required="">
+                        <div class="wthree-text">
+                            <label class="anim">
+                                <input type="checkbox" class="checkbox" required="">
+                                <span>I Agree To The Terms & Conditions</span>
+                            </label>
+                            <div class="clear"> </div>
+                        </div>
+                        <input type="submit" value="SIGNUP">
+                    </form>
+                    <p>You have an account? <a href="{% url 'inicio' %}"> Login Now!</a></p>
+                </div>
+            </div>
+            <!-- copyright -->
+            <div class="colorlibcopy-agile">
+                <p> 2023 Design by <a href="https://colorlib.com/" target="_blank">Developer</a></p>
+            </div>
+            <!-- //copyright -->
+            
+        </div>
+        
+        {% endblock %}
+</body>
+</html>

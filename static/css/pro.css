@@ -1,0 +1,13 @@
+.home_ver_productos {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #96b4d4;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+}
+
+.home_ver_productos:hover {
+    background-color: #0056b3;
+}

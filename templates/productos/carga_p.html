@@ -1,0 +1,51 @@
+{% extends 'Main.html' %}
+
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<html>
+    <head>
+        <style>
+            .formulario{
+                border: 2px solid rgb(7, 7, 7);
+                border-radius: 10px;
+                margin: 10px;
+                padding: 20px;
+                background-color:  rgba(42, 218, 100, 0.856);
+
+            }
+
+
+        </style>
+    </head>
+
+<body>
+   
+    <main class="container">
+        <h1 >
+            <strong style="color: black;">
+                AGREGAR  ITEM 
+            </strong>
+        </h1>
+        <div class="row">
+            <h1> {{error}} </h1>
+            <form action="" class="formulario" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button  class="btn btn-primary">CARGAR</button>
+                <a class="btn btn-outline-dark" href="/">&#x2190;CANCELAR</a>
+            </form>
+           
+
+        </div>
+
+    </main>
+    
+</body>
+
+
+</html>
+
+
+{% endblock %}

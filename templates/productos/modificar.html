@@ -1,0 +1,51 @@
+{% extends 'Main.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar</title>
+    <style>
+        .formulario{
+            border: 2px solid rgb(7, 7, 7);
+            border-radius: 10px;
+            padding: 20px;
+
+        }
+    </style>
+</head>
+<body>
+    
+    <main class="container my-5">
+        <h1>
+            <strong style="color: black;">
+                MODIFICAR ITEM
+
+            </strong>
+        </h1>
+        <div class="row">
+            <h1> {{error}} </h1>
+            <form class="formulario" style="background-color: rgba(42, 218, 100, 0.856);" action="" enctype="multipart/form-data" method="POST">
+        
+                {% csrf_token %}
+                {{form|crispy}}
+                <button class="btn btn-primary"> GUARDAR</button>
+                <a class="btn btn-outline-dark" href="/">&#x2190;CANCELAR</a>
+        
+            </form>
+            
+
+        </div>
+
+    </main>
+   
+    
+   
+
+    
+    
+</body>
+</html>
+{% endblock %}
