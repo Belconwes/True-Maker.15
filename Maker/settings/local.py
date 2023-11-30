@@ -55,7 +55,13 @@ MERCADO_PAGO = {
     'client_secret': 'B5W4oFxtSL01CbvPl4eUyBlZ4lxZoaB5',
 }
 
+
 MERCADOPAGO_PUBLIC_KEY = 'APP_USR-a4aff583-5735-4121-b959-786138c9e851'
+
+NOTIFICATIONS_SOFT_DELETE = True
+#Las notificaciones se eliminarán por completo de la base de datos cuando un usuario las marque como leídas o las elimine
+NOTIFICATIONS_USE_JSONFIELD = True
+#Se utilizará un campo JSONField para almacenar datos adicionales relacionados con las notificaciones
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

@@ -1,0 +1,47 @@
+{% extends 'Main.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Crear Cupón</h1>
+
+<div class="container">
+    <form method="post" action="{% url 'crear_cupon' %}" class="cupon-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="codigo">Código:</label>
+            <input type="text" name="codigo" id="codigo" placeholder="Ingrese el código del cupón" value="{{ codigo }}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="descuento_porcentaje">Porcentaje de descuento:</label>
+            <input type="text" name="porcentaje" id="porcentaje" placeholder="Ingrese solo números" value="{{ porcentaje }}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="descuento_valor">Valor de descuento:</label>
+            <input type="text" name="valor" id="valor" placeholder="Ingrese solo números" value="{{ valor }}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            
+            <label for="compartido">Compartido:</label>
+            <input type="checkbox" name="compartido" id="compartido" {% if compartido %}checked{% endif %}>
+            <p>(Si selecciona compartido significa que todos los usuarios podrán utilizar el cupón)</p>
+        </div>
+
+
+        <div class="form-group">
+            <label for="usuarios_asociados">Seleccionar los usuarios:</label>
+            <select name="usuarios_asociados" id="usuarios_asociados" multiple>
+                {% for usuario in usuarios %}
+                <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear Cupón</button>
+    </form>
+</div>
+
+
+{% endblock %}
